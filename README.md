@@ -1,118 +1,198 @@
-School System – Backend API
+# School System – Backend API
 
-A Web API for managing and querying student grading data (students, enrollments, and grades). Built with .NET, following Clean Architecture principles.
+A RESTful Web API for managing student information, enrollments, and grades.
 
-Tech Stack
+The project is built with **.NET 10** following **Clean Architecture** principles and uses **Entity Framework Core** with **SQL Server**.
 
-ComponentTechnologyFramework.NET 10ORMEntity Framework Core 10.0.8DatabaseSQL ServerArchitectureClean Architecture
+---
 
-Project Structure
+# 🚀 Tech Stack
 
-The solution is composed of two projects:
+| Component | Technology |
+|-----------|------------|
+| Framework | .NET 10 |
+| ORM | Entity Framework Core 10.0.8 |
+| Database | SQL Server |
+| Architecture | Clean Architecture |
 
-Solution/
-├── WebApi/          # Entry point of the Web API (hosts controllers/endpoints)
-└── AccesoDatos/         # Domain models and Entity Framework Core data access
+---
 
+#  Project Structure
 
-WebApi: The host project. Contains the API controllers and application startup/configuration.
-AccesoDatos: Contains the EF Core DbContext, entity models, and data access logic. Models were scaffolded from an existing database (Database First approach).
+```text
+Solution
+│
+├── WebApi/          # Entry point of the API (Controllers, Startup, Configuration)
+│
+└── AccesoDatos/     # Entity Framework DbContext, Models and Data Access
+```
 
+### WebApi
+Contains:
 
+- API Controllers
+- Dependency Injection configuration
+- Middleware
+- Application startup
 
-Note: If more layers exist (e.g., separate Application/Domain/Infrastructure projects), update this section to reflect the actual project breakdown.
+### AccesoDatos
+Contains:
 
+- Entity Framework Core DbContext
+- Entity Models
+- Database access logic
 
+The models were generated from an existing SQL Server database using the **Database First** approach.
 
-Prerequisites
+---
 
+#  Prerequisites
 
-.NET 10 SDK
-SQL Server (local instance, Docker container, or remote instance)
-A tool to manage the database (SQL Server Management Studio)
+Before running the project, make sure you have:
 
+- .NET 10 SDK
+- SQL Server
+- SQL Server Management Studio (optional)
 
-Getting Started
+---
 
-1. Clone the repository
+# Getting Started
 
-bashgit clone <repository-url>
+## 1. Clone the repository
+
+```bash
+git clone <repository-url>
 cd <repository-folder>
+```
 
-2. Configure the database connection
+---
 
-Update the connection string in appsettings.json (or appsettings.Development.json) inside the ConsoleApp project:
+## 2. Configure the database
 
-json{
+Update the connection string inside:
+
+```
+appsettings.json
+```
+
+or
+
+```
+appsettings.Development.json
+```
+
+Example:
+
+```json
+{
   "ConnectionStrings": {
-    "DefaultConnection": "Server=<your-server>;Database=<your-database>;User Id=<user>;Password=<password>;TrustServerCertificate=True;"
+    "DefaultConnection": "Server=SERVER_NAME;Database=DATABASE_NAME;User Id=USERNAME;Password=PASSWORD;TrustServerCertificate=True;"
   }
 }
+```
 
+---
 
-TODO: Confirm the exact connection string key name and format used in the project.
+## 3. Restore dependencies
 
+```bash
+dotnet restore
+```
 
+---
 
-3. Restore dependencies
+## 4. Database
 
-bashdotnet restore
+This project follows a **Database First** approach.
 
-4. Database setup
+The database schema must already exist before running the application.
 
-The database models were generated from an existing database (Database First / scaffolding), so no EF Core migrations are used to create the schema. Make sure the target SQL Server database already contains the expected schema before running the API.
+If you need to regenerate the Entity Framework models:
 
-If the schema ever needs to be re-scaffolded from the database, run:
+```bash
+dotnet ef dbcontext scaffold "Server=SERVER_NAME;Database=DATABASE_NAME;..." Microsoft.EntityFrameworkCore.SqlServer -o Models --force
+```
 
-bashdotnet ef dbcontext scaffold "Server=<your-server>;Database=<your-database>;..." Microsoft.EntityFrameworkCore.SqlServer -o Models --force
+---
 
+## 5. Run the application
 
-TODO: Confirm the exact scaffold command/parameters used for this project (output folder, context name, etc.).
-
-
-
-5. Run the project
-
-bashcd ConsoleApp
+```bash
+cd WebApi
 dotnet run
+```
 
 The API will be available at:
 
+```
 http://localhost:5168
+```
 
-Authentication
+---
 
-The API uses Basic Authentication via the Autentication endpoint.
+#  Authentication
 
+The API uses **Basic Authentication** through the following endpoint:
 
-TODO: Document the exact request/response format for this endpoint (headers, credentials format, token/session handling if any).
+```
+POST /Autentication
+```
 
+---
 
+# API Endpoints
 
-API Endpoints
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| GET | `/AlumnosProfesor` | Get students assigned to a professor |
+| POST | `/Autentication` | Authenticate a user |
+| GET | `/Prueba` | Test endpoint |
+| GET | `/BuscarAlumno` | Search for a student |
+| PUT | `/ActualizarAlumno` | Update student information |
+| POST | `/MatricularAlumno` | Enroll a student |
+| DELETE | `/BorrarAlumno` | Delete a student |
+| GET | `/BuscarCalificaciones` | Get student grades |
+| POST | `/AgregarCalificacion` | Add a grade |
+| DELETE | `/DeleteCalificaion` | Delete a grade |
 
-MethodEndpointDescriptionGET/AlumnosProfesorGet students by professorPOST/AutenticationAuthenticate a userGET/PruebaTest/health-check endpointGET/BuscarAlumnoSearch for a studentPUT/ActualizarAlumnoUpdate a student's informationPOST/MatricularAlumnoEnroll a studentDEL/BorrarAlumnoDelete a studentGET/BuscarCalificacionesSearch for gradesPOST/AgregarCalificacionAdd a gradeDEL/DeleteCalificaionDelete a grade
+---
 
+#  Testing
 
-TODO: Add request/response examples (body, query params, status codes) for each endpoint. If Swagger/OpenAPI is enabled, link to it here instead (e.g., http://localhost:5168/swagger).
+If test projects are added in the future, run:
 
+```bash
+dotnet test
+```
 
+---
 
-Testing
+# Deployment
 
+Deployment instructions can be added depending on the target environment:
 
-TODO: Add instructions here if the project includes unit/integration tests (test project name, how to run them, e.g. dotnet test).
+- IIS
+- Docker
+- Azure App Service
+- CI/CD Pipeline
 
+---
 
+# Contributing
 
-Deployment
+Contributions are welcome.
 
+1. Fork the repository.
+2. Create a feature branch.
+3. Commit your changes.
+4. Open a Pull Request.
 
-TODO: Document how this project is deployed (CI/CD pipeline, IIS, Docker, Azure App Service, etc.).
+---
 
+# Notes
 
-
-Contributing
-
-
-TODO: Add branching strategy, PR guidelines, or coding conventions if applicable.
+- Built with **.NET 10**
+- Uses **Entity Framework Core**
+- SQL Server Database
+- Database First approach
+- Clean Architecture
