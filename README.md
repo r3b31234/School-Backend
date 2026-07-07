@@ -6,7 +6,7 @@ The project is built with **.NET 10** following **Clean Architecture** principle
 
 ---
 
-# 🚀 Tech Stack
+# Tech Stack
 
 | Component | Technology |
 |-----------|------------|
